@@ -9,7 +9,7 @@ RM        = rm -rf
 
 all:
 	@echo "--------"
-	@echo "Make all in BUILD_DIR = $(BUILD_DIR)"
+	@echo "----Make all in BUILD_DIR = $(BUILD_DIR)"
 	@echo "--------"
 	mkdir -p $(OBJ_DIR) 
 	$(CC) $(SRC_DIR)/*.cpp -o $(OBJ_DIR)/battle.out

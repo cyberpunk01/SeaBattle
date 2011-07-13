@@ -19,8 +19,9 @@ Ship::Ship(unsigned char size)
     unsigned char i = 0;
 
     // set all decks as normal
+    m_Decks.clear();
     for (; i < m_Size; ++i)
-	m_Decks.at(i) = 0;
+	m_Decks.push_back(0);
 }
 
 Ship::~Ship()
