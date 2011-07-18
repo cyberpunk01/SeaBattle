@@ -44,10 +44,13 @@ public:
     ~BattleField();
 
     /* Check (i,j) cell as destroyed */
-    bool ShootToCell(unsigned char i, unsigned char j);
+    bool shootToCell(unsigned char i, unsigned char j);
 
     /* Put ship into (i,j) coords with direction (d) and (n) decks */
-    bool PutShip(unsigned char i, unsigned char j, unsigned char d, unsigned char n);
+    bool putShip(unsigned char i, unsigned char j, unsigned char d, unsigned char n);
+
+    /* Debug print func */
+    void print();
 
 private:
     unsigned char      m_Sips[4];
