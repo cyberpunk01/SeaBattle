@@ -10,9 +10,10 @@ SeaBattle::BattleField field;
 
 printf("\nBEGIN.\n");
 
+field.fillFieldRandomly();
 field.print();
 
-printf("\nEND.\n");
+printf("END.\n");
 
 return 0;
 }

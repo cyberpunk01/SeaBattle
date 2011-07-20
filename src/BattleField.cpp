@@ -8,6 +8,8 @@
 
 #include "BattleField.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 namespace SeaBattle
 {
@@ -26,25 +28,25 @@ BattleFieldCell::~BattleFieldCell()
 /*** BattleField ***/
 BattleField::BattleField()
 {
-unsigned int i = 0, j; 
+	/* initialize random seed: */
+	srand ( time(NULL) );
 
-for(; i < 4; ++i)
-{
-    m_Sips[i] = 0;
-}
+	unsigned int i = 0, j; 
 
-i = 0;
-for(; i < 10; ++i)
-{
-j = 0;
-    for(; j < 10; ++j)
-    {
-//        m_Field[i][j] = NULL;
-        m_Field[i][j] = new BattleFieldCell();
-        printf("%i ", m_Field[i][j]->m_State);
-    }
-printf(" |\n");
-}
+	for(; i < 4; ++i)
+	{
+		m_Ships[i] = 0;
+	}
+
+	i = 0;
+	for(; i < 10; ++i)
+	{
+		j = 0;
+		for(; j < 10; ++j)
+		{
+			m_Field[i][j] = new BattleFieldCell();
+		}
+	}
 }
 
 BattleField::~BattleField()
@@ -56,24 +58,136 @@ bool BattleField::shootToCell(unsigned char i, unsigned char j)
 
 }
 
-bool BattleField::putShip(unsigned char i, unsigned char j, unsigned char d, unsigned char n)
+bool BattleField::checkCellState(unsigned char x, unsigned char y, char dx, char dy, unsigned char n)
 {
+	if (x < 0 || x > 9 || y < 0 || y > 9) 
+		return false;
 
+	bool res = true;
+	unsigned char i;
+	unsigned char j;
+
+	//todo optimize this cycle, do it without numerous calling of function getFieldCell(...)
+			/*		if ( true != ((m_Field[i, j] != 0 && m_Field[i, j]->getCellState() == BattleFieldCell::S_FREE) && 
+					(m_Field[i + 1, j + 1] == NULL || m_Field[i + 1, j + 1]->getCellState() == BattleFieldCell::S_FREE) && 
+					(m_Field[i - 1, j - 1] == NULL || m_Field[i - 1, j - 1]->getCellState() == BattleFieldCell::S_FREE) &&
+					(m_Field[i + 1, j] == NULL || m_Field[i + 1, j]->getCellState() == BattleFieldCell::S_FREE) &&
+					(m_Field[i - 1, j] == NULL ||  m_Field[i - 1, j]->getCellState() == BattleFieldCell::S_FREE) &&
+					(m_Field[i, j - 1] == NULL ||  m_Field[i, j - 1]->getCellState() == BattleFieldCell::S_FREE) &&
+					(m_Field[i, j + 1] == NULL ||  m_Field[i, j + 1]->getCellState() == BattleFieldCell::S_FREE)) )
+			 */
+	for(i = x, j = y; i != x + dx * n || j != y + dy * n; i += dx, j += dy)
+	{
+		if ( true != (  (getFieldCell(i, j) != 0 && getFieldCell(i, j)->getCellState() == BattleFieldCell::S_FREE) && 
+					(getFieldCell(i + 1, j + 1) == NULL || getFieldCell(i + 1, j + 1)->getCellState() == BattleFieldCell::S_FREE) && 
+					(getFieldCell(i - 1, j - 1) == NULL || getFieldCell(i - 1, j - 1)->getCellState() == BattleFieldCell::S_FREE) &&
+					(getFieldCell(i - 1, j + 1) == NULL || getFieldCell(i - 1, j + 1)->getCellState() == BattleFieldCell::S_FREE) &&
+					(getFieldCell(i + 1, j - 1) == NULL || getFieldCell(i + 1, j - 1)->getCellState() == BattleFieldCell::S_FREE) &&
+					(getFieldCell(i + 1, j) == NULL ||  getFieldCell(i + 1, j)->getCellState() == BattleFieldCell::S_FREE) &&
+					(getFieldCell(i - 1, j) == NULL ||  getFieldCell(i - 1, j)->getCellState() == BattleFieldCell::S_FREE) &&
+					(getFieldCell(i, j - 1) == NULL ||  getFieldCell(i, j - 1)->getCellState() == BattleFieldCell::S_FREE) &&
+					(getFieldCell(i, j + 1) == NULL ||  getFieldCell(i, j + 1)->getCellState() == BattleFieldCell::S_FREE)
+			     )
+		   )
+		{
+			res = false;
+			break; 
+		}
+	}
+
+	return res;
+}
+
+bool BattleField::putShip(unsigned char x, unsigned char y, char dx, char dy, unsigned char n)
+{
+	if (checkCellState(x, y, dx, dy, n) == false)
+		return false;
+
+	unsigned char i; 
+	unsigned char j; 
+
+	for(i = x, j = y; i != x + dx * n || j != y + dy * n; i += dx, j += dy)
+	{
+		//todo I dont like this way of assignment
+		getFieldCell(i, j)->setCellState(BattleFieldCell::S_DECK);
+	}
+
+	return true;
+}
+
+void BattleField::fillFieldRandomly()
+{
+	unsigned char x;
+	unsigned char y;
+
+	char dx;
+	char dy;
+
+	unsigned char i;
+	unsigned char j;
+
+	for (i = 4; i > 0; --i)
+	{
+		for (j = 5 - i; j > 0; --j)
+		{
+			do {
+
+				x  = rand() % 10;
+				y  = rand() % 10;
+
+				dx = rand() % 10;
+				dy = rand() % 10;
+
+				//apply random, different direction for ship's location
+				switch (rand() % 2)
+				{
+					case 0:
+						dx = 1;
+						dy = 0;
+						break;
+					case 1:
+						dx = 0;
+						dy = 1;
+						break;
+					default:
+						break;
+				}
+
+				//apply random, different signs for dx and dy
+				switch (rand() % 2)
+				{
+					case 0:
+						dx *= -1;
+						dy *= -1;
+						break;
+					case 1:
+					default:
+						break;
+				}
+				printf("x = %i, y = %i, dirX = %i, dirY = %i, N = %i\n", x, y, dx, dy, i);
+			} while (putShip(x, y, dx, dy, i) != true);
+		} //for
+	} //for
 }
 
 void BattleField::print()
 {
-unsigned int i = 0, j;
+	unsigned int i = 0, j;
 
-for(j = 0; i < 10; ++i)
-{
-j = 0;
-    for(; j < 10; ++j)
-    {
-        printf("%i ", m_Field[i][j]->m_State);
-    }
-printf("|\n");
-}
+	printf("-----------------------\n");
+
+	for(j = 0; i < 10; ++i)
+	{
+		j = 0;
+		printf("| ");
+		for(; j < 10; ++j)
+		{
+			printf("%d ", (int)m_Field[i][j]->getCellState());
+		}
+		printf("| \n");
+	}
+
+	printf("-----------------------\n");
 }
 
 } //namespace

@@ -30,10 +30,16 @@ enum CellState
     S_MAX = 5,
 };
 
-//private:
+    inline CellState getCellState() const { return m_State; };
+    inline const Ship* getShip()    const { return m_Ship;  };
+
+    inline void setCellState(CellState st) { m_State = st; };
+    inline void getShip(const Ship* ship)  { m_Ship  = ship; };
+
+private:
 //todo restrict copy constructor and operator=
-    CellState  m_State;
-    const Ship * const m_Ship;
+    CellState   m_State;
+    const Ship *m_Ship;
 };
 
 /*** BattleField ***/
@@ -46,16 +52,24 @@ public:
     /* Check (i,j) cell as destroyed */
     bool shootToCell(unsigned char i, unsigned char j);
 
-    /* Put ship into (i,j) coords with direction (d) and (n) decks */
-    bool putShip(unsigned char i, unsigned char j, unsigned char d, unsigned char n);
+    /* Check (i,j) coords with direction (dx, dy) and (n) decks is it available to put ship here*/
+    bool checkCellState(unsigned char i, unsigned char j, char dx, char dy, unsigned char n);
 
-    /* Debug print func */
+    /* Put ship into (i,j) coords with direction (dx, dy) and (n) decks */
+    bool putShip(unsigned char i, unsigned char j, char dx, char dy, unsigned char n);
+
+    /* Puts ships on the field */
+    void fillFieldRandomly();
+
+    /* Get cell on (i,j) position */
+    inline BattleFieldCell* getFieldCell(unsigned char i, unsigned char j) { if (i < 0 || i > 9 || j < 0 || j > 9) return NULL; return m_Field[i][j]; };
+
+    /* Debug print func - print battle field to stdout*/
     void print();
 
 private:
-    unsigned char      m_Sips[4];
+    unsigned char      m_Ships[4];
     BattleFieldCell    *m_Field[10][10];
-//    std::vector<unsigned char> m_Decks;        
 };
 };
 

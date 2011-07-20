@@ -6,13 +6,14 @@ INC_DIR   = $(BUILD_DIR)/inc
 OBJ_DIR   = $(BUILD_DIR)/obj
 CC        = g++
 RM        = rm -rf
+FLAGS     = -g
 
 all:
 	@echo "--------"
 	@echo "----Make all in BUILD_DIR = $(BUILD_DIR)"
 	@echo "--------"
 	mkdir -p $(OBJ_DIR) 
-	$(CC) $(SRC_DIR)/*.cpp -o $(OBJ_DIR)/battle.out
+	$(CC) $(FLAGS) $(SRC_DIR)/*.cpp -o $(OBJ_DIR)/battle.out
 	@echo "--------"
 	@echo "----Building was successfully finished-----"
 	@echo "--------"
