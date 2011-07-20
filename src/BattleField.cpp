@@ -53,9 +53,23 @@ BattleField::~BattleField()
 {
 }
 
-bool BattleField::shootToCell(unsigned char i, unsigned char j)
+//todo I think we need to expand return value [for instance enum from values: killed, already checked, injured e.t.c. - bacause bool is not enought]
+bool BattleField::shootToCell(unsigned char x, unsigned char y)
 {
+	//hint you need to check if cell was 'checked' before
+	bool res = false;
 
+	if (x < 0 || x > 9 || y < 0 || y > 9) 
+		return res;
+
+	if (m_Field[x][y] == BattleFieldCell::S_DECK)
+	{
+		res = true;
+	}
+
+	m_Field[x][y]->setCellState(BattleFieldCell::S_CHECKED);
+
+	return res;
 }
 
 bool BattleField::checkCellState(unsigned char x, unsigned char y, char dx, char dy, unsigned char n)
@@ -164,7 +178,6 @@ void BattleField::fillFieldRandomly()
 					default:
 						break;
 				}
-				printf("x = %i, y = %i, dirX = %i, dirY = %i, N = %i\n", x, y, dx, dy, i);
 			} while (putShip(x, y, dx, dy, i) != true);
 		} //for
 	} //for

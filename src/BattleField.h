@@ -49,8 +49,8 @@ public:
     BattleField();
     ~BattleField();
 
-    /* Check (i,j) cell as destroyed */
-    bool shootToCell(unsigned char i, unsigned char j);
+    /* Set (i,j) cell state as checked */
+    bool shootToCell(unsigned char x, unsigned char y);
 
     /* Check (i,j) coords with direction (dx, dy) and (n) decks is it available to put ship here*/
     bool checkCellState(unsigned char i, unsigned char j, char dx, char dy, unsigned char n);
