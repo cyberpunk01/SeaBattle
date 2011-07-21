@@ -54,21 +54,32 @@ BattleField::~BattleField()
 }
 
 //todo I think we need to expand return value [for instance enum from values: killed, already checked, injured e.t.c. - bacause bool is not enought]
-bool BattleField::shootToCell(unsigned char x, unsigned char y)
+BattleFieldCell::CellState BattleField::shootToCell(unsigned char x, unsigned char y)
 {
 	//hint you need to check if cell was 'checked' before
-	bool res = false;
+	BattleFieldCell::CellState res = BattleFieldCell::S_NONE;
 
 	//todo it's need not check x > 0 because of unsigned char
 	if (x < 0 || x > 9 || y < 0 || y > 9) 
 		return res;
 
-	if (m_Field[x][y]->getCellState() == BattleFieldCell::S_DECK)
+	switch (m_Field[x][y]->getCellState())
 	{
-		res = true;
+		case BattleFieldCell::S_DECK:
+			m_Field[x][y]->setCellState(BattleFieldCell::S_DESTROYED_DECK);
+			res = BattleFieldCell::S_DECK;
+			break;
+		case BattleFieldCell::S_CHECKED:
+		case BattleFieldCell::S_DESTROYED_DECK:
+			res = BattleFieldCell::S_CHECKED;
+			break;
+		case BattleFieldCell::S_FREE:
+			m_Field[x][y]->setCellState(BattleFieldCell::S_CHECKED);
+			res = BattleFieldCell::S_FREE;
+			break;
+		default:
+			break;
 	}
-
-	m_Field[x][y]->setCellState(BattleFieldCell::S_CHECKED);
 
 	return res;
 }

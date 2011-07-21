@@ -31,14 +31,21 @@ Ship::~Ship()
 
 bool Ship::destroyDeck(unsigned char i)
 {
-    bool res = false;
+	//suggest than ship is killed
+	bool res = true;
 
-    if (m_Size > i)
-    {
-	m_Decks.at(i) = 1;
-        res = true;
-    }
+	if (m_Size > i)
+	{
+		m_Decks.at(i) = 1;
+	}
 
-    return res;
+	//check our suggestion that ship is killed
+	unsigned char j = 0;
+	for (; j < m_Size; ++j)
+		if (m_Decks.at(j) != 1)
+			res = false; 
+
+
+	return res;
 }
 };

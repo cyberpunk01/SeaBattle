@@ -26,8 +26,9 @@ enum CellState
     S_NONE = 0,
     S_FREE = 1,
     S_DECK = 2,
-    S_CHECKED = 4,
-    S_MAX = 5,
+    S_DESTROYED_DECK= 4,
+    S_CHECKED = 8,
+    S_MAX = 9,
 };
 
     inline CellState getCellState() const { return m_State; };
@@ -50,7 +51,8 @@ public:
     ~BattleField();
 
     /* Set (i,j) cell state as checked */
-    bool shootToCell(unsigned char x, unsigned char y);
+    /* Return previous cell state and change it for new after that */
+    BattleFieldCell::CellState shootToCell(unsigned char x, unsigned char y);
 
     /* Check (i,j) coords with direction (dx, dy) and (n) decks is it available to put ship here*/
     bool checkCellState(unsigned char i, unsigned char j, char dx, char dy, unsigned char n);
