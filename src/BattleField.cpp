@@ -59,10 +59,11 @@ bool BattleField::shootToCell(unsigned char x, unsigned char y)
 	//hint you need to check if cell was 'checked' before
 	bool res = false;
 
+	//todo it's need not check x > 0 because of unsigned char
 	if (x < 0 || x > 9 || y < 0 || y > 9) 
 		return res;
 
-	if (m_Field[x][y] == BattleFieldCell::S_DECK)
+	if (m_Field[x][y]->getCellState() == BattleFieldCell::S_DECK)
 	{
 		res = true;
 	}
