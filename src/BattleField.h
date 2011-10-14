@@ -9,9 +9,11 @@
 #ifndef BATTLEFIELD
 #define BATTLEFIELD
 
-#include "Ship.h"
+#include <list>
 
 namespace SeaBattle {
+
+class Ship;
 
 /*** BattleFieldCell ***/
 class BattleFieldCell
@@ -66,7 +68,7 @@ public:
     BattleFieldCell* getFieldCell(unsigned char i, unsigned char j) const;
 
     /* Check field state: false - there are no ships, true - ships are available */
-    bool hasShips();
+    bool hasShips() const;
 
     /* Debug print func - print battle field to stdout*/
     void print();
@@ -74,6 +76,7 @@ public:
 private:
     unsigned char      m_Ships [4];
     BattleFieldCell    *m_Field[10][10];
+    std::list<Ship*>   m_ShipList;
 };
 };
 

@@ -8,6 +8,8 @@
 */
 
 #include "BattleField.h"
+#include "Ship.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -29,6 +31,7 @@ BattleFieldCell::~BattleFieldCell()
 /*** BattleField ***/
 BattleField::BattleField()
 {
+    m_ShipList.clear();
 	/* initialize random seed: */
 	srand ( time(NULL) );
 
@@ -52,6 +55,11 @@ BattleField::BattleField()
 
 BattleField::~BattleField()
 {
+    std::list<Ship*>::iterator itr = m_ShipList.begin();
+    for (; itr != m_ShipList.end(); ++itr)
+        delete (*itr);
+
+    m_ShipList.clear();
 }
 
 BattleFieldCell::CellState BattleField::shootToCell(unsigned char x, unsigned char y)
@@ -121,6 +129,7 @@ bool BattleField::putShip(unsigned char x, unsigned char y, char dx, char dy, un
     unsigned char i; 
     unsigned char j; 
     Ship *ship (new Ship(n));
+    m_ShipList.push_back(ship);
     m_Ships[n - 1] += 1;
 
     for(i = x, j = y; i != x + dx * n || j != y + dy * n; i += dx, j += dy)
@@ -195,7 +204,7 @@ BattleFieldCell* BattleField::getFieldCell(unsigned char i, unsigned char j) con
     return m_Field[i][j]; 
 }
 
-bool BattleField::hasShips() 
+bool BattleField::hasShips() const
 { 
     for (int i = 0; i < 4; ++i)
         if (m_Ships[i] > 0)

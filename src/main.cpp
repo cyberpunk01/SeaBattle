@@ -1,24 +1,63 @@
 #include <stdio.h>
 #include "Ship.h"
 #include "BattleField.h"
+#include "HumanPlayer.h"
+#include "AIPlayer.h"
 
 using namespace SeaBattle;
 
 int main()
 {
-unsigned char size = 3;
-SeaBattle::Ship ship(size);
-SeaBattle::BattleField field1;
-SeaBattle::BattleField field2;
+//SeaBattle::BattleField field1;
+//SeaBattle::BattleField field2;
 
-field1.fillFieldRandomly();
-field2.fillFieldRandomly();
+//field1.fillFieldRandomly();
+//field2.fillFieldRandomly();
 
-int x;
-int y;
+Player* aiPlayer (new AIPlayer());
+Player* hPlayer  (new HumanPlayer());
+
+unsigned char x;
+unsigned char y;
 BattleFieldCell::CellState res = BattleFieldCell::S_NONE;
 
-/// main game cycle
+/// new main game cycle
+while(true)
+{
+    /// first player main cycle
+    do {
+        aiPlayer->redrawField();
+        if (aiPlayer->hasShips() == false)
+        {
+            printf("first pl won!!! \n");
+            return 0;
+        }
+        printf("first pl turn: \n");
+        
+        hPlayer->generateCoordinates(x, y);
+
+        res = aiPlayer->shoot(x, y);
+        printf("result-%i\n", res);
+    } while (res != BattleFieldCell::S_FREE);
+
+    /// second player main cycle
+    do {
+        hPlayer->redrawField();
+        if (hPlayer->hasShips() == false)
+        {
+            printf("first pl won!!! \n");
+            return 0;
+        }
+        printf("second pl turn: \n");
+        
+        aiPlayer->generateCoordinates(x, y);
+
+        res = hPlayer->shoot(x, y);
+        printf("result-%i\n", res);
+    } while (res != BattleFieldCell::S_FREE);
+  
+/// old main game cycle
+/*
 while(true)
 {
     /// first player main cycle
@@ -68,6 +107,7 @@ while(true)
         res = field1.shootToCell(x, y);
         printf("result-%i\n", res);
     } while (res != BattleFieldCell::S_FREE);
+*/
 }
 
 return 0;
