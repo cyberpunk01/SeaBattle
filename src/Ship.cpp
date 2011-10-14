@@ -29,22 +29,27 @@ Ship::~Ship()
 
 }
 
-bool Ship::destroyDeck(unsigned char i)
+//todo rewrite method without vector using
+bool Ship::destroyDeck()
 {
 	//suggest than ship is killed
 	bool res = true;
 
-	if (m_Size > i)
-	{
-		m_Decks.at(i) = 1;
-	}
+    // destroy next deck
+	unsigned char j = 0;
+    for (; j < m_Size; ++j)
+    {
+        if (m_Decks.at(j) == 0)
+        {
+    		m_Decks.at(j) = 1;
+            break;
+        }
+    }
 
 	//check our suggestion that ship is killed
-	unsigned char j = 0;
-	for (; j < m_Size; ++j)
+	for (j = 0; j < m_Size; ++j)
 		if (m_Decks.at(j) != 1)
-			res = false; 
-
+			res = false;
 
 	return res;
 }

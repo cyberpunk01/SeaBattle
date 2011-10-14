@@ -1,5 +1,5 @@
 /**
-* Copyright here
+* Copyright here or copyleft)
 */
 
 /**  BattleField class 
@@ -13,7 +13,6 @@
 
 namespace SeaBattle {
 
-
 /*** BattleFieldCell ***/
 class BattleFieldCell
 {
@@ -26,21 +25,21 @@ enum CellState
     S_NONE = 0,
     S_FREE = 1,
     S_DECK = 2,
-    S_DESTROYED_DECK= 4,
+    S_DESTROYED_DECK = 4,
     S_CHECKED = 8,
     S_MAX = 9,
 };
 
-    inline CellState getCellState() const { return m_State; };
-    inline const Ship* getShip()    const { return m_Ship;  };
+    CellState getCellState() const  { return m_State; };
+    Ship*     getShip()      const  { return m_Ship;  };
 
-    inline void setCellState(CellState st) { m_State = st; };
-    inline void getShip(const Ship* ship)  { m_Ship  = ship; };
+    void setCellState(CellState st) { m_State = st;   };
+    void setShip(Ship* ship)        { m_Ship  = ship; };
 
 private:
 //todo restrict copy constructor and operator=
     CellState   m_State;
-    const Ship *m_Ship;
+    Ship        *m_Ship;
 };
 
 /*** BattleField ***/
@@ -64,13 +63,16 @@ public:
     void fillFieldRandomly();
 
     /* Get cell on (i,j) position */
-    inline BattleFieldCell* getFieldCell(unsigned char i, unsigned char j) { if (i < 0 || i > 9 || j < 0 || j > 9) return NULL; return m_Field[i][j]; };
+    BattleFieldCell* getFieldCell(unsigned char i, unsigned char j) const;
+
+    /* Check field state: false - there are no ships, true - ships are available */
+    bool hasShips();
 
     /* Debug print func - print battle field to stdout*/
     void print();
 
 private:
-    unsigned char      m_Ships[4];
+    unsigned char      m_Ships [4];
     BattleFieldCell    *m_Field[10][10];
 };
 };
