@@ -11,6 +11,7 @@
 namespace SeaBattle { 
 
 Player::Player()
+: listener (NULL)
 {
 }
 
@@ -26,12 +27,27 @@ void Player::initialize()
 
 BattleFieldCell::CellState Player::shoot(unsigned char x, unsigned char y)
 {
-    return m_Field.shootToCell(x, y);
+    BattleFieldCell::CellState result (m_Field.shootToCell(x, y));
+
+    if (listener)
+        listener->shootResult(x, y, result);
+
+    return result;
+}
+
+void Player::setListener(PlayerListener *playerListener)
+{
+    listener = playerListener;
 }
 
 bool Player::hasShips() const
 {
     return m_Field.hasShips();
+}
+
+bool Player::shipDestroyed() const
+{
+    return m_Field.shipDestroyed(); 
 }
 
 void Player::redrawField()

@@ -14,11 +14,13 @@ int main()
 //field1.fillFieldRandomly();
 //field2.fillFieldRandomly();
 
-Player* aiPlayer (new AIPlayer());
-Player* hPlayer  (new HumanPlayer());
+AIPlayer*    aiPlayer (new AIPlayer());
+HumanPlayer* hPlayer  (new HumanPlayer());
 
-unsigned char x;
-unsigned char y;
+hPlayer->setListener(aiPlayer);
+
+int x;
+int y;
 BattleFieldCell::CellState res = BattleFieldCell::S_NONE;
 
 /// new main game cycle
@@ -37,6 +39,7 @@ while(true)
         hPlayer->generateCoordinates(x, y);
 
         res = aiPlayer->shoot(x, y);
+
         printf("result-%i\n", res);
     } while (res != BattleFieldCell::S_FREE);
 
@@ -45,7 +48,7 @@ while(true)
         hPlayer->redrawField();
         if (hPlayer->hasShips() == false)
         {
-            printf("first pl won!!! \n");
+            printf("second pl won!!! \n");
             return 0;
         }
         printf("second pl turn: \n");
@@ -53,6 +56,9 @@ while(true)
         aiPlayer->generateCoordinates(x, y);
 
         res = hPlayer->shoot(x, y);
+        if (BattleFieldCell::S_DECK == res && hPlayer->shipDestroyed())
+            aiPlayer->resetAllFlags();
+
         printf("result-%i\n", res);
     } while (res != BattleFieldCell::S_FREE);
   

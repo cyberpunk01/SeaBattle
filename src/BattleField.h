@@ -70,6 +70,9 @@ public:
     /* Check field state: false - there are no ships, true - ships are available */
     bool hasShips() const;
 
+    /* Check ship was destroyed: false - no, true - yes */
+    bool shipDestroyed() const { return shipWasDestroyed; };
+
     /* Debug print func - print battle field to stdout*/
     void print();
 
@@ -77,6 +80,7 @@ private:
     unsigned char      m_Ships [4];
     BattleFieldCell    *m_Field[10][10];
     std::list<Ship*>   m_ShipList;
+    bool               shipWasDestroyed;
 };
 };
 

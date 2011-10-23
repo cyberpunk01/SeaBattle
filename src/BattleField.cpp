@@ -19,8 +19,8 @@ namespace SeaBattle
 
 /*** BattleFieldCell ***/
 BattleFieldCell::BattleFieldCell()
-: m_State (BattleFieldCell::S_FREE),
-  m_Ship (NULL)
+: m_State (BattleFieldCell::S_FREE)
+, m_Ship (NULL)
 {
 }
 
@@ -30,8 +30,9 @@ BattleFieldCell::~BattleFieldCell()
 
 /*** BattleField ***/
 BattleField::BattleField()
+: shipWasDestroyed (false)
 {
-    m_ShipList.clear();
+        m_ShipList.clear();
 	/* initialize random seed: */
 	srand ( time(NULL) );
 
@@ -64,6 +65,7 @@ BattleField::~BattleField()
 
 BattleFieldCell::CellState BattleField::shootToCell(unsigned char x, unsigned char y)
 {
+	shipWasDestroyed = false;
 	//todo it's need not check x > 0 because of unsigned char
 	if (x < 0 || x > 9 || y < 0 || y > 9) 
 		return BattleFieldCell::S_NONE;
@@ -71,9 +73,12 @@ BattleFieldCell::CellState BattleField::shootToCell(unsigned char x, unsigned ch
 	switch (m_Field[x][y]->getCellState())
 	{
 		case BattleFieldCell::S_DECK:
-            // ship was killed - decrease corresponding ships count
-            if (m_Field[x][y]->getShip()->destroyDeck())
-                m_Ships[m_Field[x][y]->getShip()->getSize() - 1] -= 1;
+                        // ship was killed - decrease corresponding ships count
+                        if (m_Field[x][y]->getShip()->destroyDeck())
+                        {
+                            m_Ships[m_Field[x][y]->getShip()->getSize() - 1] -= 1;
+                            shipWasDestroyed = true;
+                        }
 
 			m_Field[x][y]->setCellState(BattleFieldCell::S_DESTROYED_DECK);
 			return BattleFieldCell::S_DECK;

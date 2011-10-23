@@ -23,7 +23,7 @@ public:
     
     virtual void initialize();
 
-    virtual void generateCoordinates(unsigned char &x, unsigned char &y) const;
+    virtual void generateCoordinates(int &x, int &y);
 private:
 };
 };
