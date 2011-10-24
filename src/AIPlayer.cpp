@@ -96,12 +96,18 @@ void AIPlayer::shootResult(unsigned char x, unsigned char y, BattleFieldCell::Ce
                 }
                 else
                 {
-                    // ship destroyed and fire is finished
-                    resetAllFlags(); 
-                    randomDirection();
+                    // not reachable code because ship destroyed, 
+                    // fire was finished and all flags reset
                 }
             }
     }
+}
+
+void AIPlayer::shipWasDestroyed()
+{
+    // ship was destroyed 
+    resetAllFlags(); 
+    randomDirection(); 
 }
 
 void AIPlayer::randomDirection()

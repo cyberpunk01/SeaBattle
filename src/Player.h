@@ -21,6 +21,8 @@ public:
     virtual ~PlayerListener() {};
 
     virtual void shootResult(unsigned char x, unsigned char y, BattleFieldCell::CellState result) = 0;
+
+    virtual void shipWasDestroyed() = 0;
 };
 
 
@@ -48,7 +50,7 @@ public:
     virtual bool hasShips() const;
 
     /* indicates that the player ship was destroyed */
-    virtual bool shipDestroyed() const;
+//    virtual bool shipDestroyed() const;
 
     /* draw player field */
     virtual void redrawField();

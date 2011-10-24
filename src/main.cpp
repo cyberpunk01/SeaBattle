@@ -42,7 +42,7 @@ while(true)
 
         printf("result-%i\n", res);
     } while (res != BattleFieldCell::S_FREE);
-
+//} while (0); //debug
     /// second player main cycle
     do {
         hPlayer->redrawField();
@@ -56,8 +56,8 @@ while(true)
         aiPlayer->generateCoordinates(x, y);
 
         res = hPlayer->shoot(x, y);
-        if (BattleFieldCell::S_DECK == res && hPlayer->shipDestroyed())
-            aiPlayer->resetAllFlags();
+//        if (BattleFieldCell::S_DECK == res && hPlayer->shipDestroyed())
+//            aiPlayer->resetAllFlags();
 
         printf("result-%i\n", res);
     } while (res != BattleFieldCell::S_FREE);

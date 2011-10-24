@@ -30,7 +30,12 @@ BattleFieldCell::CellState Player::shoot(unsigned char x, unsigned char y)
     BattleFieldCell::CellState result (m_Field.shootToCell(x, y));
 
     if (listener)
+    {
         listener->shootResult(x, y, result);
+
+        if (m_Field.shipDestroyed())
+            listener->shipWasDestroyed();
+    }
 
     return result;
 }
@@ -45,10 +50,10 @@ bool Player::hasShips() const
     return m_Field.hasShips();
 }
 
-bool Player::shipDestroyed() const
-{
-    return m_Field.shipDestroyed(); 
-}
+//bool Player::shipDestroyed() const
+//{
+//    return m_Field.shipDestroyed(); 
+//}
 
 void Player::redrawField()
 {

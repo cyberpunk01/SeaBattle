@@ -27,6 +27,8 @@ public:
 
     void shootResult(unsigned char x, unsigned char y, BattleFieldCell::CellState result);
 
+    void shipWasDestroyed();
+
     /* reset all class direction flags to false */
     void resetAllFlags();
 
