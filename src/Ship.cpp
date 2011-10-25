@@ -32,7 +32,7 @@ Ship::~Ship()
 //todo rewrite method without vector using
 bool Ship::destroyDeck()
 {
-	//suggest than ship is killed
+	//suggest that ship is killed
 	bool res = true;
 
     // destroy next deck

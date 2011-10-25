@@ -65,7 +65,7 @@ public:
     void fillFieldRandomly();
 
     /* Get cell on (i,j) position */
-    BattleFieldCell* getFieldCell(unsigned char i, unsigned char j) const;
+    BattleFieldCell* getFieldCell(unsigned char i, unsigned char j);
 
     /* Check field state: false - there are no ships, true - ships are available */
     bool hasShips() const;
@@ -73,8 +73,11 @@ public:
     /* Check ship was destroyed: false - no, true - yes */
     bool shipDestroyed() const { return shipWasDestroyed; };
 
+    /* Surround killed ship by checked cells */
+    void surroundDestroyedShip(const Ship *ship);
+
     /* Debug print func - print battle field to stdout*/
-    void print();
+    void print() const;
 
 private:
     unsigned char      m_Ships [4];

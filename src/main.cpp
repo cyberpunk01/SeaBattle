@@ -41,8 +41,8 @@ while(true)
         res = aiPlayer->shoot(x, y);
 
         printf("result-%i\n", res);
-    } while (res != BattleFieldCell::S_FREE);
-//} while (0); //debug
+//    } while (res != BattleFieldCell::S_FREE);
+} while (0); //debug
     /// second player main cycle
     do {
         hPlayer->redrawField();

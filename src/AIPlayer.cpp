@@ -72,40 +72,42 @@ void AIPlayer::shootResult(unsigned char x, unsigned char y, BattleFieldCell::Ce
         return;
     }
 
-    if (/*(BattleFieldCell::S_FREE == result || BattleFieldCell::S_NONE == result ... and almost all other states) &&*/ hitFlag)
+    if (hitFlag)
     {
-	hitedX = firstHitPosX;
-	hitedY = firstHitPosY;
+        hitedX = firstHitPosX;
+        hitedY = firstHitPosY;
 
-            // change the direction of fire (180 degree)
-            if (false == turnOn180)
+        // change the direction of fire (180 degree)
+        if (false == turnOn180)
+        {
+            turnOn180  = true;
+            dx *= -1;
+            dy *= -1;
+        }
+        else
+        {
+            // change the axis of fire (90 degree)
+            if (false == turnOn90)
             {
-                turnOn180  = true;
-                dx *= -1;
-                dy *= -1;
+                turnOn180 = false;
+                turnOn90  = true;
+                dx = (dx + 1) % 2;
+                dy = (dy + 1) % 2;
             }
             else
             {
-                // change the axis of fire (90 degree)
-                if (false == turnOn90)
-                {
-                    turnOn180 = false;
-                    turnOn90  = true;
-                    dx = (dx + 1) % 2;
-                    dy = (dy + 1) % 2;
-                }
-                else
-                {
-                    // not reachable code because ship destroyed, 
-                    // fire was finished and all flags reset
-                }
+                // not reachable code because ship destroyed, 
+                // fire was finished and all flags reset
             }
+        }
     }
 }
 
 void AIPlayer::shipWasDestroyed()
 {
-    // ship was destroyed 
+    // ship was destroyed => killed ship was surrounded by checked cells
+    // we should to reset flags,
+    // and apply random direction for next fire
     resetAllFlags(); 
     randomDirection(); 
 }
@@ -128,5 +130,4 @@ void AIPlayer::resetAllFlags()
     turnOn90  = false;
     hitFlag   = false;
 }
-
 };
