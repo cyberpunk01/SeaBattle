@@ -2,15 +2,15 @@ package com.seabattle;
 
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Matrix;
 
 
 
@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 	
 	private Bitmap background;
 	
-	private ImageView mLeftField;
+	private BattleField mLeftField = null;
 	
     /** Called when the activity is first created. */
     @Override
@@ -28,10 +28,13 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        ImageView mLeftField = (ImageView) this.findViewById(R.id.leftImageView);
+        
+        mLeftField = new BattleField(getApplicationContext());
+        
+        BattleField mLeftField = (BattleField) this.findViewById(R.id.leftImageView);
         background = Bitmap.createBitmap(480, 480, Bitmap.Config.RGB_565);
         background.eraseColor(Color.BLUE);
-        
+
         mLeftField.setImageBitmap(background);
         mLeftField.setOnTouchListener(touchList);
     }
@@ -55,6 +58,10 @@ public class MainActivity extends Activity {
 			    	int dx = (int)x / 48;
 			    	int dy = (int)y / 48;
 			    	
+			    	mLeftField.setMatrix(dx, dy, 3);
+			    	mLeftField.postInvalidate();
+
+			    	
 					Log.d(TAG, "X: " + Integer.toString(dx));
 					Log.d(TAG, "Y: " + Integer.toString(dy));
 			    }
@@ -65,6 +72,8 @@ public class MainActivity extends Activity {
 			return false;
 		}
 	};
+	
+	
 	
 	private Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
         Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
