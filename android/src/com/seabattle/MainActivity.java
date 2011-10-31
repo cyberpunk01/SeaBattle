@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
         
         mLeftField = new BattleField(getApplicationContext());
         
-        BattleField mLeftField = (BattleField) this.findViewById(R.id.leftImageView);
+        mLeftField = (BattleField) this.findViewById(R.id.leftImageView);
         background = Bitmap.createBitmap(480, 480, Bitmap.Config.RGB_565);
         background.eraseColor(Color.BLUE);
 
