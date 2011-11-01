@@ -61,6 +61,7 @@ void Player::redrawField()
     return m_Field.print();
 }
 
+//todo create array not on stack
 int* Player::getFieldArray()
 {
     unsigned int i, j;
@@ -68,8 +69,10 @@ int* Player::getFieldArray()
     int a[100];
     for(i = 0; i < 10; ++i)
 		for(j = 0; j < 10; ++j)
-        a[j+i] = (int)m_Field[j][i]->getCellState();
+            a[j+i] = (int)(m_Field.getFieldCell(j, i)->getCellState());
     
+    /// NB!!!! its very very bad solution !!! redo asap
+    k = a;
     return k;
 }
 };
