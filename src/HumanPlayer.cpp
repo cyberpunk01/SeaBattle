@@ -27,7 +27,7 @@ void HumanPlayer::initialize()
     Player::initialize();
 }
 
-void HumanPlayer::generateCoordinates(int &x, int &y)
+void HumanPlayer::generateCoordinates(char &x, char &y)
 {
 #ifdef linux
     int xx;

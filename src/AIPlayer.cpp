@@ -39,7 +39,7 @@ void AIPlayer::initialize()
     randomDirection();
 }
 
-void AIPlayer::generateCoordinates(int &x, int &y)
+void AIPlayer::generateCoordinates(char &x, char &y)
 {
     if (false == hitFlag)
     {

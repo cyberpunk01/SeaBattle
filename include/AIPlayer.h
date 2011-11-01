@@ -1,10 +1,10 @@
 /**
-* Copyright here
-*/
+ * Copyright here
+ */
 
-/**  AIPlayer class 
-* @author igor
-*/
+/** @brief AIPlayer class 
+ * @author igor
+ */
 
 //#ifndef AIPlayer
 //#define AIPlayer
@@ -13,7 +13,9 @@
 
 namespace SeaBattle {
 
-/*** AIPlayer ***/
+
+/** @class AIPlayer
+ * @brief Class implements computer player logic */
 class AIPlayer : public Player
                , public PlayerListener
 {
@@ -21,18 +23,27 @@ public:
     AIPlayer();
     ~AIPlayer();
     
+    /** @brief method to initialize player class */
     virtual void initialize();
 
-    virtual void generateCoordinates(int &x, int &y);
+    /** @brief generate coordinates according to player algorithm to shoot in
+     * @param x - generated x coordinate
+     * @param y - generated y coordinate */
+    virtual void generateCoordinates(char &x, char &y);
 
+    /** @brief coordinates and shoot result (PlayerListener callback)
+     * @param x      - x coordinate
+     * @param y      - y coordinate
+     * @param result - shoot result */
     void shootResult(unsigned char x, unsigned char y, BattleFieldCell::CellState result);
 
+    /** @brief indicate if ship was destroyed after last shoot (PlayerListener callback) */
     void shipWasDestroyed();
 
-    /* reset all class direction flags to false */
+    /** @brief reset all class direction flags to false */
     void resetAllFlags();
 
-    // todo delete this func 
+    /// todo delete this function
     void redrawField() {}
 
 /*
@@ -42,7 +53,7 @@ public:
 */
 
 protected:
-    /* settting random initial direction of move */
+    /** @brief setting random initial direction of move while shooting */
     void randomDirection();
 
 private:
@@ -50,14 +61,14 @@ private:
     bool turnOn180;
     bool turnOn90;
 
-    int  dx;
-    int  dy;
+    char dx;
+    char dy;
 
-    int hitedX;
-    int hitedY;
+    char hitedX;
+    char hitedY;
 
-    int firstHitPosX;
-    int firstHitPosY;
+    char firstHitPosX;
+    char firstHitPosY;
 };
 };
 

@@ -1,10 +1,10 @@
 /**
-* Copyright here
-*/
+ * Copyright here
+ */
 
-/**  Ship class 
-* @author igor
-*/
+/** @brief Ship class
+ * @author igor
+ */
 
 #ifndef SHIP
 #define SHIP
@@ -13,24 +13,28 @@
 
 namespace SeaBattle {
 
-/*** Ship ***/
+/** @class Ship 
+ * @brief Implements ship in the game */
 class Ship
 {
 public:
     Ship();
-    Ship(unsigned char size); // deck count
     ~Ship();
 
-    /** Check 'i' deck as destroyed 
-     * @return: 1 - ship killed
-     *         0 - deck is destroyed/ship doesn't killed
-     */
+    /** @brief constructor
+     * @param size - deck count */
+    Ship(unsigned char size);
+
+    /** @brief Set next deck as destroyed 
+     * @retval true  - ship killed
+     * @retval false - deck is destroyed and ship doesn't killed */
     bool destroyDeck();
 
-    // return ship size
+    /** @brief get ship size
+     * @return ship size */
     unsigned char getSize() const { return m_Size; };
 
-//todo delete vector of decks - change it for count of decks with is not destroyed
+// todo delete vector of decks - change it for count of decks with is not destroyed
 private:
     unsigned char              m_Size;
     std::vector<unsigned char> m_Decks;        

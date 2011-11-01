@@ -19,8 +19,8 @@ HumanPlayer* hPlayer  (new HumanPlayer());
 
 hPlayer->setListener(aiPlayer);
 
-int x;
-int y;
+char x;
+char y;
 BattleFieldCell::CellState res = BattleFieldCell::S_NONE;
 
 /// new main game cycle

@@ -1,10 +1,10 @@
 /**
-* Copyright here
-*/
+ * Copyright here
+ */
 
-/**  Player and PlayerListener class 
-* @author igor
-*/
+/** @brief Player and PlayerListener class 
+ * @author igor
+ */
 
 #ifndef PLAYER
 #define PLAYER
@@ -13,46 +13,62 @@
 
 namespace SeaBattle {
 
-/*** Player Listener ***/
+/** @class PlayerListener 
+ * @brief Notify other player about his shoot result */
 class PlayerListener
 {
 public:
     PlayerListener() {};
     virtual ~PlayerListener() {};
 
+    /** @brief coordinates and shoot result (PlayerListener callback)
+     * @param x      - x coordinate
+     * @param y      - y coordinate
+     * @param result - shoot result */
     virtual void shootResult(unsigned char x, unsigned char y, BattleFieldCell::CellState result) = 0;
 
+    /** @brief indicate if ship was destroyed after last shoot (PlayerListener callback) */
     virtual void shipWasDestroyed() = 0;
 };
 
 
-/*** Player ***/
+/** @class Player
+ * @brief Interface class for player in game */
 class Player //: public PlayerListener
 {
 public:
     Player();
     virtual ~Player();
     
-    /* beginning initializing of the player */
+    /** @brief beginning initializing of the player */
     virtual void initialize() = 0;
 
-    /* shoot into player's field  */
+    /** @brief shoot into player's field  
+     * @param x - x coordinate
+     * @param y - y coordinate 
+     * @return previous cell state */
     virtual BattleFieldCell::CellState shoot(unsigned char x, unsigned char y);
 
-    // different implementation for different players and platforms
-    /* algorithm of choose coordinates to shoot in */
-    virtual void generateCoordinates(int &x, int &y) = 0;
+    /** @brief algorithm of choose coordinates to shoot in
+     * Generate coordinates according to player algorithm to shoot in.
+     * Different implementation for different players and platforms
+     * @param x - generated x coordinate
+     * @param y - generated y coordinate */
+    virtual void generateCoordinates(char &x, char &y) = 0;
 
-    /* set listener for player */
+    /** @brief set listener for player 
+     * @param playerListener - player listener */
     virtual void setListener(PlayerListener *playerListener);
 
-    /* indicates that the player have unbroken ships */
+    /** @brief indicates that the player have unbroken ships
+     * @retval true  - field has undefeated ships
+     * @retval false - hasn't */
     virtual bool hasShips() const;
 
-    /* indicates that the player ship was destroyed */
+    /* @brief indicates that the player ship was destroyed */
 //    virtual bool shipDestroyed() const;
 
-    /* draw player field */
+    /** @brief draw player field */
     virtual void redrawField();
     
     /* return field array */
