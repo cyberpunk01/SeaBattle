@@ -54,6 +54,9 @@ public:
 
     /* draw player field */
     virtual void redrawField();
+    
+    /* return field array */
+    virtual int* getFieldArray();
 
 private:
     BattleField    m_Field;

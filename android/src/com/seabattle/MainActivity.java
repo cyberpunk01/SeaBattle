@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
 			    	int dx = (int)x / 48;
 			    	int dy = (int)y / 48;
 			    	
-			    	mLeftField.setMatrix(dx, dy, 3);
+			    	mLeftField.shoot(dx, dy);
 			    	mLeftField.postInvalidate();
 
 			    	

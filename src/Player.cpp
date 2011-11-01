@@ -8,6 +8,7 @@
 
 #include "Player.h"
 
+
 namespace SeaBattle { 
 
 Player::Player()
@@ -58,5 +59,17 @@ bool Player::hasShips() const
 void Player::redrawField()
 {
     return m_Field.print();
+}
+
+int* Player::getFieldArray()
+{
+    unsigned int i, j;
+    int* k;
+    int a[100];
+    for(i = 0; i < 10; ++i)
+		for(j = 0; j < 10; ++j)
+        a[j+i] = (int)m_Field[j][i]->getCellState();
+    
+    return k;
 }
 };
