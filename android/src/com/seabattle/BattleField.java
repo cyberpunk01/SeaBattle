@@ -62,14 +62,26 @@ public class BattleField extends ImageView{
 				mMatrix[i][j] = 1;
 			}
 	}
+	
+	private void updateMatrix()
+	{
+		int[] arr = new int[100];
+		arr = mNative.GetField();
+		
+		for (int i = 0; i < 10; i++)
+			for (int j = 0; j < 10; j++)
+				mMatrix[i][j] = arr[i + j];
+
+	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
+		updateMatrix();
 		Log.i("SeaBattle", "onDraw");
-		for (int i = 0; i < 10; i+=1)
-			for (int j = 0; j < 10; j+=1)
+		for (int i = 0; i < 10; i++)
+			for (int j = 0; j < 10; j++)
 			{
 				if (mMatrix[i][j] == 1)
 				{

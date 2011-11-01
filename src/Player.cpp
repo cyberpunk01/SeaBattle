@@ -18,12 +18,14 @@ Player::Player()
 
 Player::~Player()
 {
+    delete[] array;
 }
 
 //todo implement different schemas of initializing and player logic
 void Player::initialize()
 {
     m_Field.fillFieldRandomly();
+    array = new int[100];
 }
 
 BattleFieldCell::CellState Player::shoot(unsigned char x, unsigned char y)
@@ -65,14 +67,10 @@ void Player::redrawField()
 int* Player::getFieldArray()
 {
     unsigned int i, j;
-    int* k;
-    int a[100];
+
     for(i = 0; i < 10; ++i)
 		for(j = 0; j < 10; ++j)
-            a[j+i] = (int)(m_Field.getFieldCell(j, i)->getCellState());
-    
-    /// NB!!!! its very very bad solution !!! redo asap
-    k = a;
-    return k;
+            array[j+i] = (int)(m_Field.getFieldCell(j, i)->getCellState());
+    return array;
 }
 };

@@ -17,17 +17,17 @@ MainApplication::~MainApplication()
 int MainApplication::Shoot(int x, int y)
 {
 	aiPlayer->redrawField();
-        if (aiPlayer->hasShips() == false)
-        {
-			//TODO Add message YOU WIN!
-            return 0;
-        }
+	if (aiPlayer->hasShips() == false)
+	{
+		//TODO Add message YOU WIN!
+		return 0;
+	}
 	return (int)aiPlayer->shoot(x, y);
 }
 
 int MainApplication::AIShoot()
 {
-	int x, y;
+	char x, y;
 	do {
         hPlayer->redrawField();
         if (hPlayer->hasShips() == false)
@@ -41,4 +41,9 @@ int MainApplication::AIShoot()
 
     } while (res != BattleFieldCell::S_FREE);
     return (int)res;
+}
+
+int* MainApplication::GetFieldArray()
+{
+	aiPlayer->getFieldArray();
 }

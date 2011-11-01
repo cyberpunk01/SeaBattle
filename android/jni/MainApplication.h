@@ -18,4 +18,5 @@ class MainApplication
 		
 		int Shoot(int x, int y);
 		int AIShoot();
+		int* GetFieldArray();
 };

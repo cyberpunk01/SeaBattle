@@ -77,6 +77,7 @@ public:
 private:
     BattleField    m_Field;
     PlayerListener *listener;
+    int            *array;
 };
 };
 
