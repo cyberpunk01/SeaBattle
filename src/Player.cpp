@@ -70,7 +70,7 @@ int* Player::getFieldArray()
 
     for(i = 0; i < 10; ++i)
 		for(j = 0; j < 10; ++j)
-            array[j+i] = (int)(m_Field.getFieldCell(j, i)->getCellState());
+            array[10*i + j] = (int)(m_Field.getFieldCell(i, j)->getCellState());
     return array;
 }
 };

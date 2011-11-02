@@ -45,5 +45,5 @@ int MainApplication::AIShoot()
 
 int* MainApplication::GetFieldArray()
 {
-	aiPlayer->getFieldArray();
+	return aiPlayer->getFieldArray();
 }

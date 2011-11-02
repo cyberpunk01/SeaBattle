@@ -56,8 +56,8 @@ public class BattleField extends ImageView{
 		
 		mMatrix = new int[10][10];
 		
-		for (int i = 0; i < 9; i+=1)
-			for (int j = 0; j < 9; j+=1)
+		for (int i = 0; i < 10; i++)
+			for (int j = 0; j < 10; j++)
 			{
 				mMatrix[i][j] = 1;
 			}
@@ -66,11 +66,11 @@ public class BattleField extends ImageView{
 	private void updateMatrix()
 	{
 		int[] arr = new int[100];
-		arr = mNative.GetField();
+		mNative.GetField(arr);
 		
 		for (int i = 0; i < 10; i++)
 			for (int j = 0; j < 10; j++)
-				mMatrix[i][j] = arr[i + j];
+				mMatrix[i][j] = arr[10*i + j];
 
 	}
 
@@ -110,6 +110,7 @@ public class BattleField extends ImageView{
 	{
 		Log.i("SeaBattle", "Matrix not changed:" + Integer.toString(mMatrix[x][y]));
 		mMatrix[x][y] = mNative.Shoot(x, y);
+		updateMatrix();
 		Log.i("SeaBattle", "Matrix changed:" + Integer.toString(mMatrix[x][y]));
 	}
 	

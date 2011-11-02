@@ -17,7 +17,6 @@ import android.widget.ImageView;
 public class MainActivity extends Activity {
 	
 	private String TAG = "SeaBattle";
-	
 	private Bitmap background;
 	
 	private BattleField mLeftField = null;
