@@ -15,6 +15,7 @@ namespace SeaBattle {
 
 AIPlayer::AIPlayer()
 : hitFlag   (false)
+, easyLevel (false)
 , turnOn180 (false)
 , turnOn90  (false)
 , dx (1)
@@ -41,7 +42,7 @@ void AIPlayer::initialize()
 
 void AIPlayer::generateCoordinates(char &x, char &y)
 {
-    if (false == hitFlag)
+    if (false == hitFlag || true == easyLevel)
     {
         firstHitPosX = rand() % 10;
         firstHitPosY = rand() % 10;
@@ -61,6 +62,7 @@ void AIPlayer::generateCoordinates(char &x, char &y)
     printf("\nAIPlayer turn: x-%i, y-%i\n", x, y);
 }
 
+// PlayerListener callback
 void AIPlayer::shootResult(unsigned char x, unsigned char y, BattleFieldCell::CellState result)
 {
     if (BattleFieldCell::S_DECK == result)
@@ -103,6 +105,7 @@ void AIPlayer::shootResult(unsigned char x, unsigned char y, BattleFieldCell::Ce
     }
 }
 
+// PlayerListener callback
 void AIPlayer::shipWasDestroyed()
 {
     // ship was destroyed => killed ship was surrounded by checked cells
@@ -130,4 +133,10 @@ void AIPlayer::resetAllFlags()
     turnOn90  = false;
     hitFlag   = false;
 }
+
+void AIPlayer::setEasyGameLevel(bool level)
+{
+    easyLevel = level;
+}
+
 };

@@ -43,6 +43,10 @@ public:
     /** @brief reset all class direction flags to false */
     void resetAllFlags();
 
+    /** @brief set game complication
+     * @param level - if true it will be easier to play */
+    void setEasyGameLevel(bool level);
+
     /// todo delete this function
     void redrawField() {}
 
@@ -58,6 +62,8 @@ protected:
 
 private:
     bool hitFlag;
+    bool easyLevel;
+
     bool turnOn180;
     bool turnOn90;
 
