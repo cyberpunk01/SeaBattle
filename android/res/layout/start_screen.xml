@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+	<RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical" >
+
+			 <RelativeLayout
+			    android:id="@+id/bottom_padding"
+			    android:layout_width="fill_parent"
+			    android:layout_height="50dp"
+			    android:orientation="vertical" >
+			</RelativeLayout>    
+			        
+			    <Button
+			        android:id="@+id/start_button"
+			        android:layout_width="150dp"
+			        android:layout_height="wrap_content"
+			        android:layout_centerHorizontal="true"
+			        android:layout_below="@id/bottom_padding"
+			        android:text="@string/start" />
+			    
+			    <RelativeLayout
+				    android:id="@+id/left_padding"
+				    android:layout_width="wrap_content"
+				    android:layout_height="fill_parent"
+				    android:layout_toLeftOf="@id/start_button"
+				    android:orientation="vertical" >
+				</RelativeLayout>
+				
+		        <RelativeLayout
+				    android:id="@+id/small_left_padding"
+				    android:layout_width="20px"
+				    android:layout_height="fill_parent"
+				    android:layout_toRightOf="@id/left_padding"
+				    android:orientation="vertical" >
+				</RelativeLayout>  
+			    
+			    <RadioGroup android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/start_button"
+				android:layout_toRightOf="@id/small_left_padding"
+				android:orientation="vertical"
+				android:id="@+id/radio_group">
+					<RadioButton android:checked="true"
+						android:id="@+id/easy_game" android:text="Easy game"/>
+					<RadioButton android:checked="false"
+						android:id="@+id/hard_game" android:text="Hard game"/>
+				</RadioGroup>
+				
+	</RelativeLayout>
+	
+</RelativeLayout>

@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">Seabattle</string>
+    <string name="start">Start game</string>
 </resources>
