@@ -14,5 +14,5 @@ public class Native {
     public native int Shoot(int x, int y);
     public native int AIShoot();
     
-    public native void GetField(int[] data);
+    public native void GetField(int[] data, boolean mPlayer);
 }

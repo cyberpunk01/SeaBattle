@@ -18,11 +18,13 @@ public class MainActivity extends Activity {
 	
 	
 	private String TAG = "SeaBattle";
-	private Bitmap background;
+	private Bitmap mBackgroundLeft;
+	private Bitmap mBackgroundRight;
 	
-	private int mSide; // Side of one tile
+	private int mSideLeft, mSideRight; // Side of one tile
 	
 	private BattleField mLeftField = null;
+	private BattleField mRightField = null;
 	
     /** Called when the activity is first created. */
     @Override
@@ -43,17 +45,25 @@ public class MainActivity extends Activity {
 		//TODO: set game level
 		setContentView(R.layout.main);
 		
-		mLeftField = new BattleField(getApplicationContext());
+		mLeftField = new BattleField(getApplicationContext(), false);
+		mRightField = new BattleField(getApplicationContext(), true);
 		
-		mSide = mLeftField.getSide() * 10;
-
+		mSideLeft = mLeftField.getSide();
+		mSideRight = mRightField.getSide();
         
         mLeftField = (BattleField) this.findViewById(R.id.leftImageView);
-        background = Bitmap.createBitmap(mSide, mSide, Bitmap.Config.RGB_565);
-        background.eraseColor(Color.BLUE);
+        mRightField = (BattleField) this.findViewById(R.id.rightImageView);
+        
+        mBackgroundLeft = Bitmap.createBitmap(mSideLeft, mSideLeft, Bitmap.Config.RGB_565);
+        mBackgroundLeft.eraseColor(Color.BLUE);
+        
+        mBackgroundRight = Bitmap.createBitmap(mSideRight, mSideRight, Bitmap.Config.RGB_565);
+        mBackgroundRight.eraseColor(Color.BLUE);
 
-        mLeftField.setImageBitmap(background);
+        mLeftField.setImageBitmap(mBackgroundLeft);
         mLeftField.setOnTouchListener(touchList);
+        
+        mRightField.setImageBitmap(mBackgroundRight);
     }
     
 	
@@ -71,11 +81,14 @@ public class MainActivity extends Activity {
 			    }
 			    if(event.getAction()==MotionEvent.ACTION_DOWN) {
 			    	
-			    	int dx = (int) (x / (mSide * 0.1));
-			    	int dy = (int) (y / (mSide * 0.1));
+			    	int dx = (int) (x / (mSideLeft * 0.1));
+			    	int dy = (int) (y / (mSideLeft * 0.1));
 			    	
 			    	mLeftField.shoot(dx, dy);
 			    	mLeftField.postInvalidate();
+			    	
+			    	mRightField.shoot(dx, dy);
+			    	mRightField.postInvalidate();
 
 			    	
 					Log.d(TAG, "X: " + Integer.toString(dx));

@@ -12,9 +12,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 public class BattleField extends ImageView{
+
 	
 	protected int[][] mMatrix;
-
+	
+	private boolean mPlayer;
 	
 	private Bitmap mSea, mShip, mBroken, mMiss;
 	private Native mNative;
@@ -37,14 +39,20 @@ public class BattleField extends ImageView{
 		super(context);
 		initBitmaps(context);
 		// TODO Auto-generated constructor stub
-		
-
 	}
 	
+	public BattleField(Context context, boolean player) {
+		super(context);
+		initBitmaps(context);
+		mPlayer = player;
+		// TODO Auto-generated constructor stub
+	}
+
 	private void initBitmaps(Context context)
 	{
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		mSide = (int) ((display.getHeight() - 30) * 0.1);
+		
+		mSide = mPlayer ? (int) ((display.getHeight() - 30) * 0.1) : (int) ((display.getHeight() * 0.5) * 0.1);
 		
 		mNative = new Native();
 		mNative.Init();
@@ -71,7 +79,7 @@ public class BattleField extends ImageView{
 	
 	private void updateMatrix() {
 		int[] arr = new int[100];
-		mNative.GetField(arr);
+		mNative.GetField(arr, mPlayer);
 		
 		for (int i = 0; i < 10; i++)
 			for (int j = 0; j < 10; j++)
@@ -86,33 +94,27 @@ public class BattleField extends ImageView{
 		updateMatrix();
 		Log.i("SeaBattle", "onDraw");
 		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < 10; j++)
-			{
-				if (mMatrix[i][j] == 1)
-				{
+			for (int j = 0; j < 10; j++) {
+				if (mMatrix[i][j] == 1) {
 			//		Log.i("SeaBattle", "SeaTile");
 					canvas.drawBitmap(mSea, i * mSide, j * mSide, new Paint());	
 				}
-				else if (mMatrix[i][j] == 2)
-				{
+				else if (mMatrix[i][j] == 2) {
 			//		Log.i("SeaBattle", "MissTile");
 					canvas.drawBitmap(mShip, i * mSide, j * mSide, new Paint());
 				}
-				else if (mMatrix[i][j] == 4)
-				{
+				else if (mMatrix[i][j] == 4) {
 			//		Log.i("SeaBattle", "BrokenTile");
 					canvas.drawBitmap(mBroken, i * mSide, j * mSide, new Paint());
 				}
-				else if (mMatrix[i][j] == 8)
-				{
+				else if (mMatrix[i][j] == 8) {
 			//		Log.i("SeaBattle", "MissTile");
 					canvas.drawBitmap(mMiss, i * mSide, j * mSide, new Paint());
 				}
 			}
 	}
 	
-	public void shoot(int x, int y)
-	{
+	public void shoot(int x, int y) {
 		Log.i("SeaBattle", "Matrix not changed:" + Integer.toString(mMatrix[x][y]));
 		mMatrix[x][y] = mNative.Shoot(x, y);
 		updateMatrix();
@@ -120,10 +122,7 @@ public class BattleField extends ImageView{
 	}
 	
 	public int getSide() {
-		
-		return mSide;
+	
+		return mSide * 10;
 	}
-	
-	
-
 }

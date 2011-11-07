@@ -12,7 +12,7 @@ extern "C" {
 	JNIEXPORT void 		JNICALL Java_com_seabattle_Native_Init(JNIEnv* env, jobject obj);
 	JNIEXPORT int 		JNICALL Java_com_seabattle_Native_Shoot(JNIEnv* env, jobject obj, jint x, jint y);
 	JNIEXPORT int 		JNICALL Java_com_seabattle_Native_AIShoot(JNIEnv* env, jobject obj);
-	JNIEXPORT void JNICALL Java_com_seabattle_Native_GetField(JNIEnv* env, jobject obj, jintArray data);
+	JNIEXPORT void JNICALL Java_com_seabattle_Native_GetField(JNIEnv* env, jobject obj, jintArray data, jboolean player);
 }
 
 static MainApplication* app = 0;
@@ -32,8 +32,8 @@ JNIEXPORT int JNICALL Java_com_seabattle_Native_AIShoot(JNIEnv* env, jobject obj
 	return (jint)app->AIShoot();
 }
 
-JNIEXPORT void JNICALL Java_com_seabattle_Native_GetField(JNIEnv* env, jobject obj, jintArray data)
+JNIEXPORT void JNICALL Java_com_seabattle_Native_GetField(JNIEnv* env, jobject obj, jintArray data, jboolean player)
 {
-    jint* field = (jint*) app->GetFieldArray();
+    jint* field = (jint*) app->GetFieldArray(player);
 	env->SetIntArrayRegion(data, 0, 100, field);
 }

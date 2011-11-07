@@ -43,7 +43,10 @@ int MainApplication::AIShoot()
     return (int)res;
 }
 
-int* MainApplication::GetFieldArray()
+int* MainApplication::GetFieldArray(bool player)
 {
-	return aiPlayer->getFieldArray();
+    if (player)
+        return aiPlayer->getFieldArray();
+    else
+        return hPlayer->getFieldArray();
 }
