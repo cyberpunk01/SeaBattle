@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 public class BattleField extends ImageView{
@@ -16,55 +18,58 @@ public class BattleField extends ImageView{
 	
 	private Bitmap mSea, mShip, mBroken, mMiss;
 	private Native mNative;
+	
+	private int mSide;
 
 	public BattleField(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		initBitmaps();
+		initBitmaps(context);
 		// TODO Auto-generated constructor stub
 	}
 
 	public BattleField(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		initBitmaps();
+		initBitmaps(context);
 		// TODO Auto-generated constructor stub
 	}
 
 	public BattleField(Context context) {
 		super(context);
-		initBitmaps();
+		initBitmaps(context);
 		// TODO Auto-generated constructor stub
 		
 
 	}
 	
-	private void initBitmaps()
+	private void initBitmaps(Context context)
 	{
+		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		mSide = (int) ((display.getHeight() - 30) * 0.1);
+		
 		mNative = new Native();
 		mNative.Init();
 		
-		mSea = Bitmap.createBitmap(48, 48, Bitmap.Config.RGB_565);
+		mSea = Bitmap.createBitmap(mSide, mSide, Bitmap.Config.RGB_565);
 		mSea.eraseColor(Color.BLUE);
 		
-		mShip = Bitmap.createBitmap(48, 48, Bitmap.Config.RGB_565);
+		mShip = Bitmap.createBitmap(mSide, mSide, Bitmap.Config.RGB_565);
 		mShip.eraseColor(Color.GRAY);
 		
-		mBroken = Bitmap.createBitmap(48, 48, Bitmap.Config.RGB_565);
+		mBroken = Bitmap.createBitmap(mSide, mSide, Bitmap.Config.RGB_565);
 		mBroken.eraseColor(Color.RED);
 		
-		mMiss = Bitmap.createBitmap(48, 48, Bitmap.Config.RGB_565);
+		mMiss = Bitmap.createBitmap(mSide, mSide, Bitmap.Config.RGB_565);
 		mMiss.eraseColor(Color.BLACK);
 		
 		mMatrix = new int[10][10];
 		
 		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < 10; j++)
-			{
+			for (int j = 0; j < 10; j++) {
 				mMatrix[i][j] = 1;
 			}
 	}
 	
-	private void updateMatrix()
-	{
+	private void updateMatrix() {
 		int[] arr = new int[100];
 		mNative.GetField(arr);
 		
@@ -86,22 +91,22 @@ public class BattleField extends ImageView{
 				if (mMatrix[i][j] == 1)
 				{
 			//		Log.i("SeaBattle", "SeaTile");
-					canvas.drawBitmap(mSea, i * 48, j * 48, new Paint());	
+					canvas.drawBitmap(mSea, i * mSide, j * mSide, new Paint());	
 				}
 				else if (mMatrix[i][j] == 2)
 				{
 			//		Log.i("SeaBattle", "MissTile");
-					canvas.drawBitmap(mShip, i * 48, j * 48, new Paint());
+					canvas.drawBitmap(mShip, i * mSide, j * mSide, new Paint());
 				}
 				else if (mMatrix[i][j] == 4)
 				{
 			//		Log.i("SeaBattle", "BrokenTile");
-					canvas.drawBitmap(mBroken, i * 48, j * 48, new Paint());
+					canvas.drawBitmap(mBroken, i * mSide, j * mSide, new Paint());
 				}
 				else if (mMatrix[i][j] == 8)
 				{
 			//		Log.i("SeaBattle", "MissTile");
-					canvas.drawBitmap(mMiss, i * 48, j * 48, new Paint());
+					canvas.drawBitmap(mMiss, i * mSide, j * mSide, new Paint());
 				}
 			}
 	}
@@ -112,6 +117,11 @@ public class BattleField extends ImageView{
 		mMatrix[x][y] = mNative.Shoot(x, y);
 		updateMatrix();
 		Log.i("SeaBattle", "Matrix changed:" + Integer.toString(mMatrix[x][y]));
+	}
+	
+	public int getSide() {
+		
+		return mSide;
 	}
 	
 	

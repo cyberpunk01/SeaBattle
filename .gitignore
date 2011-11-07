@@ -6,3 +6,5 @@ cmake_install.cmake
 doxygenOutput/
 doxygen.log
 doxygenConfig
+android/libs
+android/obj

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +16,11 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 	
+	
 	private String TAG = "SeaBattle";
 	private Bitmap background;
+	
+	private int mSide; // Side of one tile
 	
 	private BattleField mLeftField = null;
 	
@@ -40,9 +44,12 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main);
 		
 		mLeftField = new BattleField(getApplicationContext());
+		
+		mSide = mLeftField.getSide() * 10;
+
         
         mLeftField = (BattleField) this.findViewById(R.id.leftImageView);
-        background = Bitmap.createBitmap(480, 480, Bitmap.Config.RGB_565);
+        background = Bitmap.createBitmap(mSide, mSide, Bitmap.Config.RGB_565);
         background.eraseColor(Color.BLUE);
 
         mLeftField.setImageBitmap(background);
@@ -59,15 +66,13 @@ public class MainActivity extends Activity {
 				Log.d(TAG,Integer.toString(x));
 				Log.d(TAG,Integer.toString(y));
 				
-				if(event.getAction()==MotionEvent.ACTION_UP)
-			    {
+				if(event.getAction()==MotionEvent.ACTION_UP) {
 
 			    }
-			    if(event.getAction()==MotionEvent.ACTION_DOWN)
-			    {
+			    if(event.getAction()==MotionEvent.ACTION_DOWN) {
 			    	
-			    	int dx = (int)x / 48;
-			    	int dy = (int)y / 48;
+			    	int dx = (int) (x / (mSide * 0.1));
+			    	int dy = (int) (y / (mSide * 0.1));
 			    	
 			    	mLeftField.shoot(dx, dy);
 			    	mLeftField.postInvalidate();
@@ -76,20 +81,10 @@ public class MainActivity extends Activity {
 					Log.d(TAG, "X: " + Integer.toString(dx));
 					Log.d(TAG, "Y: " + Integer.toString(dy));
 			    }
-			    if(event.getAction()==MotionEvent.ACTION_MOVE)
-			    {
+			    if(event.getAction()== MotionEvent.ACTION_MOVE) {
 
 			    }		
 			return false;
 		}
 	};
-	
-
-	private Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
-        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
-        Canvas canvas = new Canvas(bmOverlay);
-        canvas.drawBitmap(bmp1, new Matrix(), null);
-        canvas.drawBitmap(bmp2, new Matrix(), null);
-        return bmOverlay;
-    }
 }
