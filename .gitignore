@@ -8,3 +8,6 @@ doxygen.log
 doxygenConfig
 android/libs
 android/obj
+android/gen
+android/build.xml
+android/local.properties

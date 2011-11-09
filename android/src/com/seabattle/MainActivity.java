@@ -12,10 +12,10 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 
 
 public class MainActivity extends Activity {
-	
 	
 	private String TAG = "SeaBattle";
 	private Bitmap mBackgroundLeft;
@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
 	
 	private int mSideLeft, mSideRight; // Side of one tile
 	
-	private BattleField mLeftField = null;
+	private BattleField mLeftField  = null;
 	private BattleField mRightField = null;
 	
     /** Called when the activity is first created. */
@@ -33,21 +33,23 @@ public class MainActivity extends Activity {
         setContentView(R.layout.start_screen);
         
         final Button button = (Button) findViewById(R.id.start_button);
+        final RadioButton easyRadioButton = (RadioButton) this.findViewById(R.id.easyGame);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startGame(true);
+                startGame(easyRadioButton.isChecked());
             }
         });
     }
     
     
-	private void startGame(Boolean easyLevel) {
-		//TODO: set game level
-		setContentView(R.layout.main);
+	private void startGame(boolean easyLevel) {
+        setContentView(R.layout.main);		
 		
-		mLeftField = new BattleField(getApplicationContext(), false);
+		mLeftField  = new BattleField(getApplicationContext(), false);
 		mRightField = new BattleField(getApplicationContext(), true);
-		
+        		
+        mRightField.setEasyGameLevel(easyLevel);
+
 		mSideLeft = mLeftField.getSide();
 		mSideRight = mRightField.getSide();
         

@@ -25,6 +25,11 @@ int MainApplication::Shoot(int x, int y)
 	return (int)aiPlayer->shoot(x, y);
 }
 
+void MainApplication::SetEasyGame(bool level)
+{
+	aiPlayer->setEasyGameLevel(level);
+}
+
 int MainApplication::AIShoot()
 {
 	char x, y;

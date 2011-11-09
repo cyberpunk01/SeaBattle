@@ -56,7 +56,7 @@ public class BattleField extends ImageView{
 		
 		mNative = new Native();
 		mNative.Init();
-		
+
 		mSea = Bitmap.createBitmap(mSide, mSide, Bitmap.Config.RGB_565);
 		mSea.eraseColor(Color.BLUE);
 		
@@ -122,7 +122,10 @@ public class BattleField extends ImageView{
 	}
 	
 	public int getSide() {
-	
 		return mSide * 10;
+	}
+
+	public void setEasyGameLevel(boolean level) {
+		mNative.SetEasyGame(level);
 	}
 }

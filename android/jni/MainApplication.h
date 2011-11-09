@@ -12,11 +12,13 @@ class MainApplication
 		AIPlayer* aiPlayer;
 		HumanPlayer* hPlayer;
 		BattleFieldCell::CellState res;
-	public:
-		MainApplication();
-		~MainApplication();
-		
-		int Shoot(int x, int y);
-		int AIShoot();
-		int* GetFieldArray(bool player);
+
+    public:
+        MainApplication();
+        ~MainApplication();
+
+        int  Shoot(int x, int y);
+        int  AIShoot();
+        void SetEasyGame(bool level);
+        int* GetFieldArray(bool player);
 };

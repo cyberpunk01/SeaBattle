@@ -18,7 +18,7 @@
 			        
 			    <Button
 			        android:id="@+id/start_button"
-			        android:layout_width="150dp"
+			        android:layout_width="200dp"
 			        android:layout_height="wrap_content"
 			        android:layout_centerHorizontal="true"
 			        android:layout_below="@id/bottom_padding"
@@ -40,16 +40,16 @@
 				    android:orientation="vertical" >
 				</RelativeLayout>  
 			    
-			    <RadioGroup android:layout_width="fill_parent"
+			    <RadioGroup android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_below="@id/start_button"
 				android:layout_toRightOf="@id/small_left_padding"
 				android:orientation="vertical"
 				android:id="@+id/radio_group">
 					<RadioButton android:checked="true"
-						android:id="@+id/easy_game" android:text="Easy game"/>
+						android:id="@+id/hardGame" android:text="    Hard game"/>
 					<RadioButton android:checked="false"
-						android:id="@+id/hard_game" android:text="Hard game"/>
+						android:id="@+id/easyGame" android:text="Easy game"/>
 				</RadioGroup>
 				
 	</RelativeLayout>
