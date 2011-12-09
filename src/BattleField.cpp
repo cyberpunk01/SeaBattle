@@ -34,7 +34,7 @@ BattleField::BattleField()
 {
     m_ShipList.clear();
 	/* initialize random seed: */
-	srand (time(NULL));
+//	srand (time(NULL));
 
 	unsigned int i = 0, j; 
 

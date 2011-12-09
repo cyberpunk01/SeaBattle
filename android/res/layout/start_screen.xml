@@ -47,7 +47,7 @@
 				android:orientation="vertical"
 				android:id="@+id/radio_group">
 					<RadioButton android:checked="true"
-						android:id="@+id/hardGame" android:text="    Hard game"/>
+						android:id="@+id/hardGame" android:text="Hard game"/>
 					<RadioButton android:checked="false"
 						android:id="@+id/easyGame" android:text="Easy game"/>
 				</RadioGroup>

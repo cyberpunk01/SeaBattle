@@ -13,16 +13,6 @@ import android.widget.ImageView;
 
 public class HumanBattleField extends ImageView {
 	
-	/* it was cell state in native code ;( */
-	/*
-    final static int S_NONE = 0;
-    final static int S_FREE = 1;
-    final static int S_DECK = 2;
-    final static int S_DESTROYED_DECK = 4;
-    final static int S_CHECKED = 8;
-    final static int S_MAX = 9;
-    */
-    
 	protected int[][] mMatrix;
 	
 	protected Bitmap mSea, mShip, mBroken, mMiss;
@@ -33,7 +23,6 @@ public class HumanBattleField extends ImageView {
 	public HumanBattleField(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initBitmaps(context);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void setNative(Native nativeRef)
@@ -44,14 +33,12 @@ public class HumanBattleField extends ImageView {
 	public HumanBattleField(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initBitmaps(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	public HumanBattleField(Context context, Native nativeRef) {
 		super(context);
 		mNative = nativeRef;
 		initBitmaps(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void initBitmaps(Context context)
@@ -92,7 +79,6 @@ public class HumanBattleField extends ImageView {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		// TODO Auto-generated method stub
 		super.onDraw(canvas);
 		Log.i("SeaBattle", "onDraw Human");
 		if (mNative != null)
@@ -120,17 +106,22 @@ public class HumanBattleField extends ImageView {
 		}
 	}
 	
-	public void shoot(int x, int y) {
+	public int shoot(int x, int y) {
 		Log.i("SeaBattle", "Matrix not changed:" + Integer.toString(mMatrix[x][y]));
+
 		if (mNative == null)
 		{
 			Log.i("shoot", " Native == null again :( in human");
-			return;
+            //TODO return is not nice 
+			return -1;
 		}	
-		mMatrix[x][y] = mNative.Shoot(x, y);
+
+        int result = mNative.Shoot(x, y);
+		mMatrix[x][y] = result;
 		updateMatrix();
-//		if (mMatrix[x][y] == S_FREE)
 		Log.i("SeaBattle", "Matrix changed:" + Integer.toString(mMatrix[x][y]));
+
+        return result;
 	}
 	
 	public int getSide() {

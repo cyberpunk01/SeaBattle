@@ -1,5 +1,7 @@
 #include <jni.h>
 #include <android/log.h>
+#include <time.h>
+#include <stdlib.h>
 
 #define  LOG_TAG    "SeaBattle"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
@@ -16,11 +18,17 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_com_seabattle_Native_GetField(JNIEnv* env, jobject obj, jintArray data, jboolean player);
 }
 
-static MainApplication* app = 0;
+static MainApplication* app = NULL;
 	
 JNIEXPORT void JNICALL Java_com_seabattle_Native_Init(JNIEnv* env, jobject obj)
 {
-	app = new MainApplication();
+//TODO app already initialized after first launch (between different launchs)
+//    if (NULL == app)
+    {
+        LOGI("INIT native main -------- \n");
+        srand (time(NULL));
+    	app = new MainApplication();
+    }
 }
 
 JNIEXPORT int JNICALL Java_com_seabattle_Native_Shoot(JNIEnv* env, jobject obj, jint x, jint y)
