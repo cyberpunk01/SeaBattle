@@ -13,11 +13,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import  android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
-	private String TAG              = "SeaBattle";
+	private String TAG = "SeaBattle";
+
     private final static int FREE_DECK = 1;
+    private final static int WIN_CODE  = 0;
 
 	private Bitmap mBackgroundLeft;
 	private Bitmap mBackgroundRight;
@@ -101,10 +104,24 @@ public class MainActivity extends Activity {
                     /* Human player shoots into ai field */
 			    	int result = AIField.shoot(dx, dy);
 
-                    if (result == FREE_DECK)      /// If player shoot into destroyed cell or into ship deck
-	    		    	HumanField.shoot(dx, dy); /// Ai player shoots into human field
+                    if (WIN_CODE == result)
+                    {
+                        Toast.makeText(getApplicationContext(), "You win!", Toast.LENGTH_LONG).show();
+                        HumanField.setOnTouchListener(null);
+                    }
+                    else
+                    {
+                        if (result == FREE_DECK)               /// If player shoot into destroyed cell or into ship deck
+	    		    	    result = HumanField.shoot(dx, dy); /// Ai player shoots into human field
 
-			    	AIField.postInvalidate();
+                        if (WIN_CODE == result)
+                        {
+                            Toast.makeText(getApplicationContext(), "You lost!", Toast.LENGTH_LONG).show();
+                            HumanField.setOnTouchListener(null);
+                        }
+                    }
+
+                    AIField.postInvalidate();
                     HumanField.postInvalidate();
 
 			    	Log.d(TAG, "X: " + Integer.toString(dx));

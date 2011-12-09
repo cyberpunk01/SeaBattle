@@ -23,20 +23,17 @@ public class AIBattleField extends ImageView {
 	public AIBattleField(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initBitmaps(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	public AIBattleField(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initBitmaps(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	public AIBattleField(Context context, Native nativeRef) {
 		super(context);
 		mNative = nativeRef;
 		initBitmaps(context);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void setNative(Native nativeRef)
@@ -44,7 +41,6 @@ public class AIBattleField extends ImageView {
 		mNative = nativeRef;
 	}
 	
-//	@Override
 	protected void initBitmaps(Context context)
 	{
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -83,7 +79,6 @@ public class AIBattleField extends ImageView {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		// TODO Auto-generated method stub
 		super.onDraw(canvas);
 		Log.i("SeaBattle", "onDraw AI");
 		if (mNative != null)
@@ -111,17 +106,21 @@ public class AIBattleField extends ImageView {
 		}
 	}
 	
-//	@Override
-	public void shoot(int x, int y) {
+	public int shoot(int x, int y) {
 		Log.i("SeaBattle", "Matrix not changed:" + Integer.toString(mMatrix[x][y]));
 		if (mNative == null)
 		{
 			Log.i("shoot", " Native == null again :( ai");
-			return;
+			return -1;
 		}	
-		mMatrix[x][y] = mNative.AIShoot();
+
+        int result = mNative.AIShoot();
+		mMatrix[x][y] = result;
 		updateMatrix();
+
 		Log.i("SeaBattle", "Matrix changed:" + Integer.toString(mMatrix[x][y]));
+
+        return result;
 	}
 	
 	public int getSide() {

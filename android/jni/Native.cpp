@@ -14,7 +14,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_com_seabattle_Native_Init(JNIEnv* env, jobject obj);
 	JNIEXPORT int  JNICALL Java_com_seabattle_Native_Shoot(JNIEnv* env, jobject obj, jint x, jint y);
 	JNIEXPORT int  JNICALL Java_com_seabattle_Native_AIShoot(JNIEnv* env, jobject obj);
-	JNIEXPORT void JNICALL Java_com_seabattle_Native_SetEasyGame(JNIEnv* env, jboolean level);
+	JNIEXPORT void JNICALL Java_com_seabattle_Native_SetEasyGame(JNIEnv* env, jobject obj, jboolean level);
 	JNIEXPORT void JNICALL Java_com_seabattle_Native_GetField(JNIEnv* env, jobject obj, jintArray data, jboolean player);
 }
 
@@ -25,7 +25,6 @@ JNIEXPORT void JNICALL Java_com_seabattle_Native_Init(JNIEnv* env, jobject obj)
 //TODO app already initialized after first launch (between different launchs)
 //    if (NULL == app)
     {
-        LOGI("INIT native main -------- \n");
         srand (time(NULL));
     	app = new MainApplication();
     }
@@ -47,7 +46,7 @@ JNIEXPORT void JNICALL Java_com_seabattle_Native_GetField(JNIEnv* env, jobject o
 	env->SetIntArrayRegion(data, 0, 100, field);
 }
 
-JNIEXPORT void JNICALL Java_com_seabattle_Native_SetEasyGame(JNIEnv* env, jboolean level)
+JNIEXPORT void JNICALL Java_com_seabattle_Native_SetEasyGame(JNIEnv* env, jobject obj, jboolean level)
 {
     app->SetEasyGame(level);
 }
